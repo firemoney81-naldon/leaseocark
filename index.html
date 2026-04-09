@@ -1,23 +1,696 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "장기렌트 즉시출고 견적 비교 서비스",
+      "url": "https://yourdomain.com",
+      "description": "2026년 신차 장기렌트 즉시출고 모델 최저가 비교 견적을 제공합니다. 출고 대기 없이 바로 차량을 인도받으세요. 초기 비용 0원, 보험 및 세금 포함, 편리한 정비 서비스를 지원합니다.",
+      "serviceType": "CarRental",
+      "provider": {
+        "@type": "Organization",
+        "name": "장기렌트 전문 법인 (가칭)",
+        "url": "https://yourdomain.com",
+        "sameAs": [
+          "https://www.facebook.com/your_rental_company",
+          "https://www.instagram.com/your_rental_company"
+        ]
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "KR"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "장기렌트 즉시출고 모델",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "현대 쏘나타 (The new Sonata)"
+            },
+            "description": "가장 인기 있는 중형 세단 모델입니다. 즉시 출고 재고 다량 확보. 월 납입금 최저가 견적.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "350000",
+              "priceCurrency": "KRW",
+              "unitText": "Month"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "기아 K5 (The new K5)"
+            },
+            "description": "스포티한 디자인의 K5. 즉시 출고 가능 재고로 빠르게 이용하세요. 2026년형 모델 보유.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "340000",
+              "priceCurrency": "KRW",
+              "unitText": "Month"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "기아 쏘렌토 (Sorento)"
+            },
+            "description": "국내 최고 인기 SUV 쏘렌토. 즉시 출고 재고를 확보하여 대기 시간 없이 운행 가능.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "480000",
+              "priceCurrency": "KRW",
+              "unitText": "Month"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "현대 그랜저 (Grandeur)"
+            },
+            "description": "준대형 세단의 표준. 2026년형 그랜저 즉시출고. 고급 옵션 모델 재고 보유.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "520000",
+              "priceCurrency": "KRW",
+              "unitText": "Month"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "제네시스 GV70 (Genesis GV70)"
+            },
+            "description": "프리미엄 SUV GV70. 신차 출고 대기가 긴 모델도 즉시 출고 재고로 빠르게 계약 가능.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "700000",
+              "priceCurrency": "KRW",
+              "unitText": "Month"
+            }
+          }
+        ]
+      }
+    }
+  </script>
+
+  <style>
+    /* Noto Sans KR font family */
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.8;
+      background-color: #f7f9fc; /* Soft blueish-gray background */
+      color: #333;
+      word-break: keep-all; /* Korean word wrapping */
+    }
+    header {
+      background-color: #004d99; /* Deep blue header */
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden; /* For wave effect if added */
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(to bottom, transparent, #f7f9fc);
+      z-index: 1;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 900;
+      margin: 0.5rem 0 1rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      letter-spacing: -1px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin: 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease, transform 0.3s ease;
+      font-size: 1.1rem;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 5px;
+    }
+    nav a:hover {
+      color: #ffcc00; /* Bright yellow hover color */
+      transform: translateY(-2px);
+      border-bottom: 2px solid #ffcc00;
+    }
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      background-color: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      border-radius: 12px;
+    }
+    h1, h2 {
+      color: #003366; /* Deep navy blue heading color */
+      font-weight: 700;
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-bottom: 3px solid #e0f0ff;
+    }
+    h2 {
+      font-size: 2.2rem;
+      line-height: 1.4;
+      padding-bottom: 1rem;
+    }
+    h3 {
+      color: #004d99;
+      font-size: 1.8rem;
+      margin-top: 2rem;
+      border-left: 5px solid #004d99;
+      padding-left: 1rem;
+    }
+    p {
+      text-align: justify;
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+      line-height: 1.9;
+    }
+    .main-text-highlight {
+      font-weight: 700;
+      color: #d90000; /* Red for emphasis on "immediate" */
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 1rem;
+    }
+    th, td {
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
+      text-align: center;
+    }
+    th {
+      background-color: #004d99;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    tr:nth-child(even) {
+      background-color: #f8f8f8;
+    }
+    dl dt {
+      font-weight: 700;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      color: #0066cc;
+      background-color: #f5fafd;
+      padding: 1.2rem;
+      border-radius: 8px;
+      border-left: 5px solid #0066cc;
+      transition: background-color 0.3s ease;
+      font-size: 1.1rem;
+    }
+    dl dt:hover {
+      background-color: #e6f2ff;
+    }
+    dl dd {
+      margin: 0.5rem 0 1.5rem 1rem;
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      background-color: #ffffff;
+      display: none;
+    }
+    dl dt.active + dd {
+      display: block;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #ff6600; /* Orange CTA button */
+      color: white;
+      font-weight: 700;
+      padding: 1.2rem 3.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      margin: 2.5rem auto;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      text-align: center;
+      font-size: 1.3rem;
+      box-shadow: 0 6px 12px rgba(255,102,0,0.3);
+    }
+    .cta-button:hover {
+      background-color: #e65c00;
+      transform: translateY(-3px);
+    }
+    .keyword-tags {
+      margin: 2rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .keyword-tags a {
+      background-color: #e0f0ff;
+      color: #0066cc;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .keyword-tags a:hover {
+      background-color: #b3d1ff;
+      transform: scale(1.05);
+    }
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.95rem;
+      color: #777;
+      background-color: #eef4f7;
+      margin-top: 3rem;
+      border-top: 1px solid #d0dbe4;
+    }
+    .external-link {
+      display: inline-block;
+      color: #0066cc;
+      font-weight: 500;
+      margin-top: 1rem;
+      text-decoration: underline;
+    }
+    .image-container {
+      margin: 2rem auto;
+      text-align: center;
+    }
+    .image-container img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .comparison-table {
+      margin-top: 3rem;
+      border: 2px solid #004d99;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .comparison-table th {
+      background-color: #004d99;
+      color: white;
+      padding: 1rem;
+    }
+    .comparison-table td {
+      padding: 1rem;
+      background-color: #f7f9fc;
+    }
+    .highlight-cell {
+      background-color: #fffacd; /* Light yellow for emphasis */
+      font-weight: 700;
+      color: #d90000;
+    }
+    .section-content {
+      padding: 2rem 0;
+    }
+    .input-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .input-group label {
+      font-weight: 700;
+      color: #003366;
+      margin-bottom: 0.5rem;
+    }
+    .input-group input, .input-group select {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    .input-group input:focus, .input-group select:focus {
+      border-color: #0066cc;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>장기렌트 즉시출고 - 2026년 최저가 견적 비교 [최대 혜택]</h1>
     <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+      <ul>
+        <li><a href="#intro">서비스 소개</a></li>
+        <li><a href="#models">즉시출고 인기 모델</a></li>
+        <li><a href="#price_comparison">견적 및 비용 분석</a></li>
+        <li><a href="#pros_cons">장단점 비교</a></li>
+        <li><a href="#faq">자주 묻는 질문</a></li>
+      </ul>
     </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  </header>
+
+  <main>
+    <section id="intro">
+      <div class="section-content">
+        <h2>출고 대기 없이 바로 타는 신차! 장기렌트 즉시출고란?</h2>
+        <p>신차 구매를 고려하는 소비자에게 가장 큰 고민은 바로 긴 <span class="main-text-highlight">출고 대기 시간</span>입니다. 반도체 수급 문제와 생산 지연으로 인해 인기 모델은 수개월에서 1년 이상을 기다려야 하는 경우가 비일비재합니다. 하지만 <span class="main-text-highlight">장기렌트 즉시출고</span> 서비스를 이용하면 이러한 기다림 없이, 원하는 신차를 <span class="main-text-highlight">단 며칠 만에</span> 인도받을 수 있습니다.</p>
+        <p>저희 **장기렌트즉시출고 견적사이트**는 2026년 최신 모델을 포함하여 각 렌탈 업체가 미리 확보해 둔 선구매 재고 차량을 실시간으로 비교 분석해 드립니다. 고객님은 출고를 기다릴 필요 없이, <span class="main-text-highlight">가장 저렴한 월 납입금</span>으로 원하는 차량을 선택할 수 있습니다. 특히 초기 비용 부담 없이, 보험료와 자동차세 등 모든 부대 비용을 포함한 합리적인 <span class="main-text-highlight">장기렌트 가격</span>을 제시하여, 신차 이용의 편의성을 극대화합니다.</p>
+        <p>저희는 **내돈내산** 후기를 바탕으로 신뢰할 수 있는 **장기렌트 업체**만을 선별하여 제휴를 맺고 있습니다. 복잡한 계약 조건, 숨겨진 추가 비용 없이 **투명한 견적**을 제공하며, 고객님의 상황에 맞는 최적의 금융 상품을 추천해 드립니다. **장기렌트즉시출고**는 급한 신차 필요성과 비용 효율성을 동시에 만족시키는 최고의 대안입니다. 지금 바로 <span class="main-text-highlight">무료 견적</span>을 통해 혜택을 확인하세요.</p>
+
+        <div class="image-container">
+          <!-- Pexels image placeholder: new car dealership or keys handover -->
+          <img src="https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="장기렌트 즉시출고 차량">
+        </div>
+
+        <div class="keyword-tags" aria-label="연관 검색 키워드">
+          <a href="#price_comparison">장기렌트 가격</a>
+          <a href="#models">장기렌트 즉시출고 모델</a>
+          <a href="#pros_cons">장기렌트 장단점</a>
+          <a href="#price_comparison">장기렌트 비용</a>
+          <a href="#intro">장기렌트 업체 추천</a>
+          <a href="#models">쏘렌토 즉시출고</a>
+          <a href="#models">K5 즉시출고</a>
+          <a href="#models">그랜저 즉시출고</a>
+          <a href="#price_comparison">월 납입금 비교</a>
+          <a href="#pros_cons">장기렌트 vs 리스</a>
+          <a href="#faq">장기렌트 심사</a>
+          <a href="#intro">초기 비용 없는 장기렌트</a>
+          <a href="#models">제네시스 즉시출고</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="models">
+      <div class="section-content">
+        <h2>2026년 장기렌트 즉시출고 인기 모델 리스트</h2>
+        <p>2026년은 다양한 신차 출시와 함께 하이브리드, 전기차 모델의 인기가 지속되고 있습니다. 특히 출고 대기가 길어지면서 <span class="main-text-highlight">장기렌트즉시출고</span> 수요가 급증하고 있습니다. 저희가 실시간 재고를 바탕으로 엄선한 인기 모델들을 소개합니다. 아래 모델들은 일반적으로 출고 대기가 길지만, 저희 제휴 업체를 통하면 <span class="main-text-highlight">단기 재고</span> 확보로 빠르게 차량을 인도받을 수 있습니다. 정확한 재고 상황은 실시간으로 변동되므로, 견적 문의 시 꼭 확인해 주세요.</p>
+
+        <h3>✅ 세단 및 경차 인기 모델</h3>
+        <ul>
+          <li><strong>현대 쏘나타 (The new Sonata)</strong>: 국민 중형 세단. 2026년형 모델이 출시되며 <span class="main-text-highlight">즉시출고</span> 수요가 높습니다. 스마트스트림 가솔린 1.6T와 하이브리드 모델 모두 재고 확보.</li>
+          <li><strong>기아 K5</strong>: 스포티한 디자인으로 젊은 층에게 인기. <span class="main-text-highlight">저렴한 월 납입금</span>으로 이용 가능한 엔트리 모델부터 풀옵션 모델까지 다양하게 보유.</li>
+          <li><strong>현대 그랜저</strong>: 준대형 세단 시장의 강자. 신차 대기 6개월 이상인 모델도 <span class="main-text-highlight">즉시출고</span> 재고로 만날 수 있습니다. 고급 트림 위주로 재고 보유.</li>
+          <li><strong>기아 레이</strong>: 경차 시장의 절대 강자. 상업용 및 패밀리카로도 인기. <span class="main-text-highlight">경차 장기렌트</span>는 월 비용이 저렴하여 부담이 적습니다.</li>
+        </ul>
+
+        <h3>✅ SUV 및 RV 인기 모델</h3>
+        <ul>
+          <li><strong>기아 쏘렌토 (Sorento)</strong>: 국내 SUV 판매량 1위. 하이브리드 모델은 신차 출고 대기가 특히 깁니다. <span class="main-text-highlight">쏘렌토 즉시출고</span> 재고를 확보하는 것이 핵심입니다.</li>
+          <li><strong>현대 싼타페 (Santa Fe)</strong>: 2026년형 풀체인지 모델의 인기가 뜨겁습니다. 웅장한 디자인과 넓은 실내 공간으로 패밀리카 <span class="main-text-highlight">장기렌트 추천</span> 1순위입니다.</li>
+          <li><strong>기아 카니발 (Carnival)</strong>: 패밀리 미니밴. 9인승 모델 즉시출고 재고가 많지 않으니 빠른 문의가 필요합니다.</li>
+          <li><strong>현대 캐스퍼 (Casper)</strong>: 경형 SUV로 인기가 높습니다. <span class="main-text-highlight">초보 운전자</span>에게 <span class="main-text-highlight">장기렌트</span>로 적합한 모델입니다.</li>
+        </ul>
+
+        <h3>✅ 고급 및 수입차 즉시출고 모델</h3>
+        <ul>
+          <li><strong>제네시스 GV70/GV80</strong>: 프리미엄 SUV. 출고 대기가 긴 모델 중 하나입니다. <span class="main-text-highlight">제네시스 즉시출고</span>는 렌탈 업체 선구매 재고를 통해서만 가능합니다.</li>
+          <li><strong>BMW 5시리즈 (5 Series) / X5</strong>: 수입차 모델도 <span class="main-text-highlight">즉시출고</span>가 가능합니다. <span class="main-text-highlight">수입차 장기렌트</span>는 초기 비용 부담을 줄여줍니다.</li>
+          <li><strong>테슬라 모델3 / 모델Y</strong>: 전기차 시장의 선두주자. <span class="main-text-highlight">전기차 장기렌트</span> 시 보조금 혜택을 받을 수 있으며, <span class="main-text-highlight">즉시출고</span> 재고를 통해 빠르게 운행 가능.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="price_comparison">
+      <div class="section-content">
+        <h2>장기렌트 견적 비교 및 비용 분석: 2026년 최저가 견적 받는 법</h2>
+        <p><strong>장기렌트 비용</strong>은 차량 모델, 옵션, 계약 기간, 주행 거리, 보증금/선납금 여부, 그리고 <span class="main-text-highlight">장기렌트 업체</span>에 따라 크게 달라집니다. 특히 **즉시출고** 차량의 경우 재고 소진 시 <span class="main-text-highlight">할인 혜택</span>이 사라지거나 월 납입금이 상승할 수 있으므로, 실시간 견적 비교가 필수입니다. 저희는 <span class="main-text-highlight">네이버</span>, <span class="main-text-highlight">구글</span> 등에서 **장기렌트즉시출고**를 검색하는 고객님들께 가장 <span class="main-text-highlight">저렴한곳</span>을 찾아드립니다.</p>
+
+        <h3>✅ 장기렌트 월 비용을 결정하는 주요 요인</h3>
+        <p>장기렌트의 월 <span class="main-text-highlight">예상 금액</span>을 산정할 때 고려해야 할 핵심 요인들입니다. 단순히 <span class="main-text-highlight">장기렌트 가격</span>만 비교할 것이 아니라, 전체적인 계약 조건을 확인해야 합니다.</p>
+        <ul>
+          <li><strong>차량 모델 및 옵션</strong>: 차량 가격이 높을수록 당연히 월 납입금이 상승합니다. 인기 옵션이 포함된 <span class="main-text-highlight">즉시출고</span> 차량은 재고가 빠르게 소진될 수 있습니다.</li>
+          <li><strong>계약 기간</strong>: 일반적으로 36개월, 48개월, 60개월 계약이 주를 이룹니다. 기간이 길수록 월 납입금은 낮아지지만, 총 <span class="main-text-highlight">장기렌트 비용</span>은 증가할 수 있습니다.</li>
+          <li><strong>주행 거리 약정</strong>: 연간 주행 거리에 따라 <span class="main-text-highlight">월 납입금</span>이 달라집니다. 주행 거리가 짧을수록 비용이 저렴하며, 약정 거리를 초과하면 위약금이 발생합니다.</li>
+          <li><strong>초기 비용 (보증금/선납금)</strong>: <span class="main-text-highlight">초기 비용 없는 장기렌트</span>를 선택할 경우 월 납입금이 높아지고, 보증금(계약 종료 시 반환)이나 선납금(미리 납부)을 납부하면 월 납입금이 낮아집니다.</li>
+          <li><strong>렌탈사 할인 및 프로모션</strong>: 렌탈사마다 <span class="main-text-highlight">프로모션</span>이나 <span class="main-text-highlight">할인</span> 조건이 다르므로, 여러 업체를 비교해야 <span class="main-text-highlight">최저가 견적</span>을 찾을 수 있습니다.</li>
+        </ul>
+
+        <h3 style="margin-top: 3rem;">✅ 2026년 인기 모델별 장기렌트 예상 비용 비교</h3>
+        <p>다음은 2026년 즉시출고 인기 모델의 <span class="main-text-highlight">평균 월 납입금</span>을 <span class="main-text-highlight">예상</span>한 표입니다. 정확한 <span class="main-text-highlight">견적</span>은 개인의 신용도 및 계약 조건에 따라 달라지므로, 참고용으로 활용하시고 문의해 주세요.</p>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>모델명</th>
+              <th>옵션 (주요 트림 기준)</th>
+              <th>장기렌트 월 납입금 (예상)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>준중형/중형 세단</td>
+              <td>기아 K5 (2026년형)</td>
+              <td>스마트 트림 (가솔린 1.6T)</td>
+              <td>35만원 ~ 45만원</td>
+            </tr>
+            <tr>
+              <td>중형/준대형 세단</td>
+              <td>현대 쏘나타 (2026년형)</td>
+              <td>인스퍼레이션 트림 (하이브리드)</td>
+              <td>42만원 ~ 55만원</td>
+            </tr>
+            <tr>
+              <td>준대형 세단</td>
+              <td>현대 그랜저 (2026년형)</td>
+              <td>익스클루시브 트림 (가솔린 2.5)</td>
+              <td>50만원 ~ 65만원</td>
+            </tr>
+            <tr>
+              <td>SUV (패밀리)</td>
+              <td>기아 쏘렌토 (하이브리드)</td>
+              <td>시그니처 트림</td>
+              <td>55만원 ~ 70만원</td>
+            </tr>
+            <tr>
+              <td>고급 SUV</td>
+              <td>제네시스 GV70 (2026년형)</td>
+              <td>가솔린 2.5T</td>
+              <td>75만원 ~ 90만원</td>
+            </tr>
+            <tr>
+              <td>경형 SUV</td>
+              <td>현대 캐스퍼</td>
+              <td>터보 인스퍼레이션</td>
+              <td>25만원 ~ 35만원</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>위 <span class="main-text-highlight">장기렌트 가격</span>은 <span class="main-text-highlight">보증금 0원</span>, 48개월 계약, 연 2만 km 기준으로 <span class="main-text-highlight">산정된 예상 금액</span>입니다. <span class="main-text-highlight">최저가 견적</span>을 받기 위해서는 **장기렌트 전문 업체**의 실시간 프로모션을 확인하는 것이 필수입니다. **네이버**나 **구글** 검색으로 <span class="main-text-highlight">장기렌트 즉시출고</span>를 찾으시는 분들은 저희 비교견적 서비스를 통해 <span class="main-text-highlight">숨은 할인 혜택</span>을 놓치지 마세요.</p>
+        <div style="text-align: center;">
+          <a href="#quote_form" class="cta-button">실시간 즉시출고 재고 확인 및 견적 받기</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="pros_cons">
+      <div class="section-content">
+        <h2>장기렌트 장단점 비교: 현명한 선택을 위한 분석</h2>
+        <p>장기렌트는 신차를 이용하는 가장 합리적인 방법 중 하나로 꼽힙니다. 특히 <span class="main-text-highlight">장기렌트즉시출고</span>는 긴 대기 시간이라는 단점을 해소시켜주어 더욱 매력적입니다. 하지만 모든 금융 상품에는 <span class="main-text-highlight">장점과 단점</span>이 존재합니다. 본인의 상황에 맞는 최적의 선택을 위해 <span class="main-text-highlight">장기렌트</span>와 <span class="main-text-highlight">자동차 할부</span>, <span class="main-text-highlight">리스</span>의 <span class="main-text-highlight">차이점</span>을 명확히 비교해 보겠습니다.</p>
+
+        <h3>✅ 장기렌트의 주요 장점 (Pros)</h3>
+        <ul>
+          <li><strong>출고 대기 시간 단축</strong>: <span class="main-text-highlight">즉시출고</span> 서비스의 가장 큰 장점입니다. 신차 계약 후 수개월을 기다릴 필요 없이, 며칠 내로 차량을 받을 수 있습니다.</li>
+          <li><strong>초기 비용 부담 최소화</strong>: <span class="main-text-highlight">초기 비용 없는 장기렌트</span> 상품을 이용하면 보증금이나 선납금 없이 차량을 이용할 수 있습니다. <span class="main-text-highlight">저렴한곳</span>을 찾을 때 이 부분이 중요합니다.</li>
+          <li><strong>세금 및 보험료 절감</strong>: 차량 명의가 렌탈사로 되어 있어 취등록세, 자동차세, 보험료가 월 납입금에 포함됩니다. 특히 사업자의 경우 <span class="main-text-highlight">장기렌트 비용</span> 전액을 손비 처리할 수 있어 <span class="main-text-highlight">세금 절감 효과</span>가 큽니다.</li>
+          <li><strong>간편한 차량 관리</strong>: 정기적인 차량 점검 및 소모품 교체 서비스가 포함되어 있어, 차량 관리에 신경 쓸 필요가 없습니다. 사고 발생 시에도 렌탈사에서 처리해 주므로 편리합니다.</li>
+          <li><strong>보험료 할증 걱정 없음</strong>: 개인 보험이 아닌 렌탈사 보험을 이용하므로 사고 발생 시에도 개인 보험료가 할증되지 않아 <span class="main-text-highlight">초보 운전자</span>에게 유리합니다.</li>
+        </ul>
+
+        <h3>✅ 장기렌트의 주요 단점 (Cons)</h3>
+        <ul>
+          <li><strong>총 비용 부담 증가</strong>: 장기렌트는 초기 비용이 적지만, 만기 시 차량을 반납하거나 인수 시점에 비용을 지불해야 합니다. 총 납입액은 현금 구매나 할부보다 높을 수 있습니다.</li>
+          <li><strong>운행 거리 제한</strong>: 계약 시 설정한 연간 운행 거리를 초과하면 위약금이 발생합니다. <span class="main-text-highlight">장거리 운전자</span>에게는 부담이 될 수 있습니다.</li>
+          <li><strong>번호판 제한</strong>: <span class="main-text-highlight">하, 호, 허</span> 번호판을 사용해야 합니다. (최근에는 '하, 허' 번호판에 대한 인식이 개선되는 추세입니다.)</li>
+        </ul>
+
+        <h3>✅ 장기렌트 vs 할부 vs 리스 비교표</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>장기렌트</th>
+              <th>자동차 리스</th>
+              <th>자동차 할부</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>차량 명의</th>
+              <td class="highlight-cell">렌탈사 명의</td>
+              <td>고객(운용리스) 또는 리스사 명의</td>
+              <td>고객 명의</td>
+            </tr>
+            <tr>
+              <th>초기 비용</th>
+              <td>보증금/선납금 (선택)</td>
+              <td>보증금 (필수)</td>
+              <td>선수금 (선택)</td>
+            </tr>
+            <tr>
+              <th>보험 및 세금</th>
+              <td class="highlight-cell">월 납입금에 포함</td>
+              <td>고객 별도 납부</td>
+              <td>고객 별도 납부</td>
+            </tr>
+            <tr>
+              <th>번호판</th>
+              <td class="highlight-cell">하, 호, 허</td>
+              <td>일반 번호판 (개인)</td>
+              <td>일반 번호판 (개인)</td>
+            </tr>
+            <tr>
+              <th>계약 만료 시점</th>
+              <td class="highlight-cell">반납, 인수, 재렌탈 선택</td>
+              <td>반납, 인수, 재리스 선택</td>
+              <td>차량 소유권 획득</td>
+            </tr>
+            <tr>
+              <th>장점</th>
+              <td class="highlight-cell">즉시출고 가능, 비용 처리 용이 (사업자)</td>
+              <td>번호판 자유, 월 납입금 저렴</td>
+              <td>차량 소유, 총 비용 저렴</td>
+            </tr>
+            <tr>
+              <th>단점</th>
+              <td>번호판 제한, 총 비용 높음</td>
+              <td>초기 비용 부담, 보험료/세금 별도</td>
+              <td>초기 비용 부담, 감가상각 위험</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="external_links">
+      <div class="section-content">
+        <h2>공신력 있는 외부 정보 및 참고 자료</h2>
+        <p>장기렌트 계약 시 소비자의 권리를 보호받고, 정확한 정보를 습득하는 것이 중요합니다. 아래는 <span class="main-text-highlight">장기렌트</span>와 <span class="main-text-highlight">신차 구매</span> 관련 공신력 있는 외부 사이트입니다. 계약 전 반드시 참고하여 현명한 결정을 내리세요.</p>
+        <ul>
+          <li><strong>한국소비자원</strong>: 자동차 대여(장기렌트) 관련 피해 구제 사례 및 소비자 유의사항을 확인하여 계약 전 체크리스트로 활용할 수 있습니다.
+            <a href="https://www.kca.go.kr/home/main.do" target="_blank" rel="noopener noreferrer" class="external-link">한국소비자원 홈페이지</a></li>
+          <li><strong>금융감독원 금융소비자정보 포털 파인</strong>: 자동차 금융 상품(할부, 리스, 렌트)에 대한 기본적인 정보를 제공합니다.
+            <a href="https://fine.fss.or.kr/" target="_blank" rel="noopener noreferrer" class="external-link">금융감독원 파인</a></li>
+          <li><strong>국토교통부 자동차관리정보 시스템</strong>: 차량 등록 대수, 차량 정보 등을 확인할 수 있어 차량 구매 트렌드를 파악할 수 있습니다.
+            <a href="https://www.car.go.kr/" target="_blank" rel="noopener noreferrer" class="external-link">국토교통부 자동차민원 대국민포털</a></li>
+          <li><strong>나무위키 - 장기렌터카</strong>: 장기렌터카의 정의, 역사, 장단점 등 상세한 정보를 얻을 수 있습니다.
+            <a href="https://namu.wiki/w/%EC%9E%A5%EA%B8%B0%EB%A0%8C%ED%84%B0%EC%B9%B4" target="_blank" rel="noopener noreferrer" class="external-link">나무위키 장기렌터카 항목</a></li>
+          <li><strong>여신금융협회</strong>: 여신금융협회에서 제공하는 리스/렌터카 관련 공시 자료 및 소비자 유의사항을 확인합니다.
+            <a href="http://www.crefia.or.kr/" target="_blank" rel="noopener noreferrer" class="external-link">여신금융협회 홈페이지</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="section-content">
+        <h2>자주 묻는 질문 (FAQ)</h2>
+        <dl>
+          <dt tabindex="0" aria-expanded="false"><strong>Q. 즉시출고 차량은 왜 출고 대기가 없나요? 일반 계약과 차이점은 무엇인가요?</strong></dt>
+          <dd>A. **즉시출고** 차량은 렌탈 업체가 미리 차량 제조사에 주문하여 재고를 선확보한 차량입니다. 일반적인 신차 계약은 고객 주문 후 제조사 생산 스케줄에 따라 출고되므로 대기 기간이 길지만, **즉시출고**는 이미 생산이 완료되어 렌탈사 물류 창고에 보관 중인 차량을 계약하는 것입니다. 따라서 출고 대기 없이 빠르면 3~7일 이내에 차량 인도가 가능합니다. (물론 <span class="main-text-highlight">재고 모델</span>과 <span class="main-text-highlight">옵션</span>이 한정적일 수 있습니다.)</dd>
+
+          <dt tabindex="0" aria-expanded="false"><strong>Q. 장기렌트 계약 시 신용 등급 심사가 필요한가요? 신용 점수가 낮아도 계약이 가능한가요?</strong></dt>
+          <dd>A. 네, 장기렌트 계약 시에도 신용 등급 심사가 필요합니다. 렌탈 업체는 고객의 상환 능력을 판단하기 위해 <span class="main-text-highlight">신용 심사</span>를 진행합니다. 신용 점수가 낮은 경우 <span class="main-text-highlight">보증금</span>을 높이거나 **장기렌트 전문 업체**의 심사 기준 완화 상품을 이용할 수 있습니다. 저희 사이트는 **디시** 등 커뮤니티에서 정보를 얻기 어려운 <span class="main-text-highlight">저신용자 장기렌트</span> 상품도 전문적으로 상담해 드립니다.</dd>
+
+          <dt tabindex="0" aria-expanded="false"><strong>Q. 만기 시 차량 인수를 할 경우, 총 비용이 더 저렴한가요?</strong></dt>
+          <dd>A. <span class="main-text-highlight">장기렌트</span> 계약 만기 시 차량 <span class="main-text-highlight">인수</span>를 원하면, 계약 시점의 **잔존 가치**와 남은 비용을 지불하고 차량을 소유하게 됩니다. **장기렌트 비용**을 따져보면 인수가 아닌 반납을 선택할 경우 총 비용 부담이 더 낮을 수 있습니다. 하지만 중고차 시세가 잔존 가치보다 높을 경우 인수가 유리할 수 있으니, 계약 시 **잔존 가치**를 꼼꼼히 확인하고 전문가와 상담하는 것이 중요합니다.</dd>
+
+          <dt tabindex="0" aria-expanded="false"><strong>Q. 즉시출고 차량은 옵션 변경이 가능한가요?</strong></dt>
+          <dd>A. **즉시출고** 차량은 이미 완성된 차량이기 때문에 **옵션 변경이 불가능**합니다. 고객이 원하는 옵션이 있다면, 해당 옵션이 포함된 <span class="main-text-highlight">즉시출고 재고</span>를 찾아야 합니다. 만약 특정 옵션이 필수라면 **신규 계약**을 통해 차량을 주문해야 하며, 이 경우 출고 대기 시간이 발생합니다.</dd>
+
+          <dt tabindex="0" aria-expanded="false"><strong>Q. 장기렌트 상품권이나 현금지원 혜택이 있나요?</strong></dt>
+          <dd>A. 렌탈 업체마다 <span class="main-text-highlight">프로모션</span>이나 <span class="main-text-highlight">사은품</span>, <span class="main-text-highlight">현금지원</span> <span class="main-text-highlight">혜택</span>이 다릅니다. 저희 **장기렌트견적사이트**에서는 <span class="main-text-highlight">신규 가입</span> 고객을 위한 <span class="main-text-highlight">지원금</span> 이벤트를 진행하기도 하며, 제휴 업체의 <span class="main-text-highlight">최대 할인</span> 정보를 실시간으로 비교해 드립니다. <span class="main-text-highlight">유튜브</span> 등에서 광고하는 혜택과 실제 견적을 비교해보고, **내돈내산 후기**를 참고하여 가장 좋은 <span class="main-text-highlight">상품</span>을 선택하는 것이 중요합니다.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="quote_form">
+      <div class="section-content">
+        <h2>실시간 장기렌트 즉시출고 견적 신청 및 문의</h2>
+        <p>지금 바로 **장기렌트즉시출고** 전문가와 상담하고, 2026년 최신 모델을 가장 **저렴한 가격**에 만나보세요. 아래 양식을 작성해 주시면 실시간 재고 확인 후 고객님께 가장 적합한 **장기렌트 견적**을 제안해 드립니다. <span class="main-text-highlight">개인 고객</span>뿐만 아니라 <span class="main-text-highlight">법인 고객</span>도 환영하며, <span class="main-text-highlight">초기 비용 없는 장기렌트</span> 견적도 바로 확인 가능합니다.</p>
+
+        <!-- Dwell time optimization elements: form inputs -->
+        <form action="#" method="post">
+          <div class="input-group">
+            <label for="car_model">희망 모델 선택 (선택 시 더 정확한 즉시출고 재고 확인 가능)</label>
+            <select id="car_model" name="car_model">
+              <option value="">-- 모델을 선택하세요 --</option>
+              <option value="sonata">현대 쏘나타 (The new Sonata)</option>
+              <option value="k5">기아 K5 (The new K5)</option>
+              <option value="grandeur">현대 그랜저</option>
+              <option value="sorento">기아 쏘렌토</option>
+              <option value="santafe">현대 싼타페</option>
+              <option value="carnival">기아 카니발</option>
+              <option value="gv70">제네시스 GV70</option>
+              <option value="ev6">기아 EV6</option>
+              <option value="ioniq5">현대 아이오닉 5</option>
+              <option value="etc">기타 모델 문의</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="term">희망 계약 기간 (개월)</label>
+            <select id="term" name="term">
+              <option value="">-- 기간 선택 --</option>
+              <option value="36">36개월</option>
+              <option value="48">48개월</option>
+              <option value="60">60개월</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="name">성함</label>
+            <input type="text" id="name" name="name" placeholder="이름을 입력해 주세요" required>
+          </div>
+          <div class="input-group">
+            <label for="phone">연락처</label>
+            <input type="tel" id="phone" name="phone" placeholder="휴대폰 번호를 입력해 주세요" required>
+          </div>
+          <div class="input-group">
+            <label for="comments">추가 문의 사항 (ex. 초기 비용 0원 희망, 특정 옵션 요청 등)</label>
+            <textarea id="comments" name="comments" rows="3" placeholder="궁금한 점을 자유롭게 남겨주세요"></textarea>
+          </div>
+          <div style="text-align: center;">
+            <button type="submit" class="cta-button" aria-label="장기렌트 즉시출고 견적 신청">무료 견적 신청하기</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // FAQ accordion functionality (expand/collapse)
+    document.querySelectorAll('dl dt').forEach((dt) => {
+      dt.addEventListener('click', () => {
+        const expanded = dt.getAttribute('aria-expanded') === 'true' || false;
+        dt.setAttribute('aria-expanded', !expanded);
+        dt.classList.toggle('active');
+      });
+      dt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dt.click();
+        }
+      });
+    });
+  </script>
+  
